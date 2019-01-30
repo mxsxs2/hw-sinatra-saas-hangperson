@@ -9,6 +9,7 @@ class HangpersonGame
   attr_reader :word
   attr_reader :guesses
   attr_reader :wrong_guesses
+  attr_reader :word_with_guesses
 
   # Init app and variables
   def initialize(word)
@@ -16,6 +17,7 @@ class HangpersonGame
     @word = word.downcase
     @guesses = ''
     @wrong_guesses = ''
+    @word_with_guesses = ''
   end
 
   # Guesses if a letter is in the word
@@ -33,9 +35,23 @@ class HangpersonGame
       else
         @wrong_guesses += letter
       end
+      create_masked_word
       return true
     end
     false
+  end
+
+  # Creates the masked word
+  def create_masked_word
+    str = [] # Retarded immutable frozen string hack.
+    @word.each_char.with_index do |c, i|
+      str[i] = if @guesses.include?(c)
+                 c
+               else
+                 '-'
+               end
+      @word_with_guesses = str.join('')
+    end
   end
 
   # You can test it by running $ bundle exec irb -I. -r app.rb
