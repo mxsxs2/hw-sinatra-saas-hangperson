@@ -4,12 +4,16 @@ class HangpersonGame
   # to make the tests in spec/hangperson_game_spec.rb pass.
 
   # Get a word from remote "random word" service
-
-  # def initialize()
-  # end
+  # Add readeble instance  variables
+  attr_reader :word
+  attr_reader :guesses
+  attr_reader :wrong_guesses
   
+  # Init app and variables
   def initialize(word)
     @word = word
+    @guesses =''
+    @wrong_guesses=''
   end
 
   # You can test it by running $ bundle exec irb -I. -r app.rb
