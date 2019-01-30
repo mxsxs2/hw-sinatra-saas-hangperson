@@ -12,13 +12,16 @@ class HangpersonGame
 
   # Init app and variables
   def initialize(word)
-    @word = word
+    # Make the word lowercase
+    @word = word.downcase
     @guesses = ''
     @wrong_guesses = ''
   end
 
   # Guesses if a letter is in the word
   def guess(letter)
+    # Make the letter lowercase
+    letter.downcase!
     # If the letter wasnt guessed yet
     if !@guesses.include?(letter) && !@wrong_guesses.include?(letter)
       # Check if it is in the word
@@ -27,7 +30,9 @@ class HangpersonGame
       else
         @wrong_guesses += letter
       end
+      return true
     end
+    false
   end
 
   # You can test it by running $ bundle exec irb -I. -r app.rb
