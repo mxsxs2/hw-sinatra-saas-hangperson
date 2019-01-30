@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require 'hangperson_game'
 
@@ -10,7 +12,7 @@ describe HangpersonGame do
   end
 
   describe 'new' do
-    it "takes a parameter and returns a HangpersonGame object" do      
+    it 'takes a parameter and returns a HangpersonGame object' do
       @hangpersonGame = HangpersonGame.new('glorp')
       expect(@hangpersonGame).to be_an_instance_of(HangpersonGame)
       expect(@hangpersonGame.word).to eq('glorp')
@@ -74,25 +76,25 @@ describe HangpersonGame do
       before :each do
         @game = HangpersonGame.new('foobar')
       end
-      it 'throws an error when empty', :pending => true do
+      it 'throws an error when empty' do
         expect { @game.guess('') }.to raise_error(ArgumentError)
       end
-      it 'throws an error when not a letter', :pending => true do
+      it 'throws an error when not a letter' do
         expect { @game.guess('%') }.to raise_error(ArgumentError)
       end
-      it 'throws an error when nil', :pending => true do
+      it 'throws an error when nil' do
         expect { @game.guess(nil) }.to raise_error(ArgumentError)
       end
     end
   end
 
-  describe 'displayed word with guesses', :pending => true do
+  describe 'displayed word with guesses', pending: true do
     before :each do
       @game = HangpersonGame.new('banana')
     end
     # for a given set of guesses, what should the word look like?
     @test_cases = {
-      'bn' =>  'b-n-n-',
+      'bn' => 'b-n-n-',
       'def' => '------',
       'ban' => 'banana'
     }
@@ -105,18 +107,18 @@ describe HangpersonGame do
   end
 
   describe 'game status' do
-    before :each do 
+    before :each do
       @game = HangpersonGame.new('dog')
     end
-    it 'should be win when all letters guessed', :pending => true do
+    it 'should be win when all letters guessed', pending: true do
       guess_several_letters(@game, 'ogd')
       expect(@game.check_win_or_lose).to eq(:win)
     end
-    it 'should be lose after 7 incorrect guesses', :pending => true do
+    it 'should be lose after 7 incorrect guesses', pending: true do
       guess_several_letters(@game, 'tuvwxyz')
       expect(@game.check_win_or_lose).to eq(:lose)
     end
-    it 'should continue play if neither win nor lose', :pending => true do
+    it 'should continue play if neither win nor lose', pending: true do
       guess_several_letters(@game, 'do')
       expect(@game.check_win_or_lose).to eq(:play)
     end

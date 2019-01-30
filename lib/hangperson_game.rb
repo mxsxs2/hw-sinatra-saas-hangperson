@@ -20,8 +20,11 @@ class HangpersonGame
 
   # Guesses if a letter is in the word
   def guess(letter)
+    # Raise error on invalid input
+    raise ArgumentError if letter.nil? || letter.empty? || /^[a-zA-Z]$/.match(letter).nil?
+
     # Make the letter lowercase
-    letter.downcase!
+    letter = letter.downcase
     # If the letter wasnt guessed yet
     if !@guesses.include?(letter) && !@wrong_guesses.include?(letter)
       # Check if it is in the word
