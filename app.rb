@@ -40,9 +40,9 @@ class HangpersonApp < Sinatra::Base
   post '/guess' do
     letter = params[:guess].to_s[0]
     begin
-      @game.guess(letter)
+      session[:secret] = @game.guess(letter)
     rescue ArgumentError
-      ''
+      session[:secret] = true
     end
     redirect '/show'
   end
@@ -53,7 +53,7 @@ class HangpersonApp < Sinatra::Base
   # Notice that the show.erb template expects to use the instance variables
   # wrong_guesses and word_with_guesses from @game.
   get '/show' do
-    ### YOUR CODE HERE ###
+    @usedletter = session[:secret]
     erb :show # You may change/remove this line
   end
 

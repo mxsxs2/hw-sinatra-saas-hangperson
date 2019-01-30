@@ -10,13 +10,14 @@
     <%= @game.wrong_guesses %>
   </p>
 </div>
-
 <p class="alert alert-success">
   Word so far:
   <span class="word"><%= @game.word_with_guesses %></span>
 </p>
 
+
 <form action="/guess" method="post">
+ <% if @usedletter == false %> You have already used that letter<br/> <% end %>
   <div class="form-group row">
     <label for="guess" class="col-md-2 col-form-label">Guess a letter:</label>
     <input type="text" name="guess" autocomplete="off"
