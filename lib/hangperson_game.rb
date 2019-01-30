@@ -10,6 +10,7 @@ class HangpersonGame
   attr_reader :guesses
   attr_reader :wrong_guesses
   attr_reader :word_with_guesses
+  @@max_incorrect_allowed = 7
 
   # Init app and variables
   def initialize(word)
@@ -21,6 +22,8 @@ class HangpersonGame
   end
 
   # Guesses if a letter is in the word
+  public
+
   def guess(letter)
     # Raise error on invalid input
     raise ArgumentError if letter.nil? || letter.empty? || /^[a-zA-Z]$/.match(letter).nil?
@@ -42,6 +45,8 @@ class HangpersonGame
   end
 
   # Creates the masked word
+  private
+
   def create_masked_word
     str = [] # Retarded immutable frozen string hack.
     @word.each_char.with_index do |c, i|
@@ -52,6 +57,16 @@ class HangpersonGame
                end
       @word_with_guesses = str.join('')
     end
+  end
+
+  # Check whether the game is won or not
+  public
+
+  def check_win_or_lose
+    return :win if @word_with_guesses == @word
+    return :lose if @guesses.length + @wrong_guesses.length == @@max_incorrect_allowed
+
+    :play
   end
 
   # You can test it by running $ bundle exec irb -I. -r app.rb
