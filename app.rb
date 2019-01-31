@@ -40,9 +40,9 @@ class HangpersonApp < Sinatra::Base
   post '/guess' do
     letter = params[:guess].to_s[0]
     begin
-      session[:secret] = @game.guess(letter)
+      session[:usedletter] = @game.guess(letter)
     rescue ArgumentError
-      session[:secret] = true
+      session[:usedletter] = true
     end
     redirect '/show'
   end
@@ -53,17 +53,22 @@ class HangpersonApp < Sinatra::Base
   # Notice that the show.erb template expects to use the instance variables
   # wrong_guesses and word_with_guesses from @game.
   get '/show' do
-    @usedletter = session[:secret]
+    @usedletter = session[:usedletter]
+    redirect '/' if @game.word.nil? || @game.word.empty?
+    redirect '/win' if @game.check_win_or_lose == :win
+    redirect '/lose' if @game.check_win_or_lose == :lose
     erb :show # You may change/remove this line
   end
 
   get '/win' do
-    ### YOUR CODE HERE ###
+    redirect '/lose' if @game.check_win_or_lose == :lose
+    redirect '/show' if @game.check_win_or_lose == :play
     erb :win # You may change/remove this line
   end
 
   get '/lose' do
-    ### YOUR CODE HERE ###
+    redirect '/win' if @game.check_win_or_lose == :win
+    redirect '/show' if @game.check_win_or_lose == :play
     erb :lose # You may change/remove this line
   end
 end
