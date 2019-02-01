@@ -64,7 +64,7 @@ class HangpersonGame
 
   def check_win_or_lose
     return :win if @word_with_guesses == @word
-    return :lose if @guesses.length + @wrong_guesses.length == @@max_incorrect_allowed
+    return :lose if @wrong_guesses.length == @@max_incorrect_allowed
 
     :play
   end
